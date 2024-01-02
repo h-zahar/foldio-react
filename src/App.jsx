@@ -46,10 +46,17 @@ function App() {
         setFolderName={setFolderName}
       />
       <br />
+      <p>
+        <strong>
+          <span className="brand">You{"'"}re at: </span>#
+          {!clicked ? "Home" : clicked}
+        </strong>
+      </p>
       <Navigation
         handleNavigation={handleNavigation}
         renderedFolders={renderedFolders}
       />
+      <br />
       <br />
 
       {clicked && <button onClick={resetToHome}>{"<-"} Home</button>}
