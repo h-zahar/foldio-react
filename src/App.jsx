@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import Navigation from "./components/Navigation";
 import FolderCreation from "./components/FolderCreation";
+import HomeIcon from "./components/HomeIcon";
 
 function App() {
   const folders = {
@@ -63,7 +64,11 @@ function App() {
       <br />
       <br />
 
-      {clicked && <button onClick={resetToHome}>{"<-"} Home</button>}
+      {clicked && (
+        <button onClick={resetToHome}>
+          <HomeIcon /> Home
+        </button>
+      )}
     </>
   );
 }
