@@ -18,18 +18,35 @@ function App() {
     setRenderedFolders(renderedFolders[e.target.value]);
   };
 
+  const handleCreate = () => {
+    const tmp = { ...renderedFolders };
+    tmp[folderName] = {};
+    setRenderedFolders(tmp);
+    setFolderName("");
+  };
+
   const [renderedFolders, setRenderedFolders] = useState(folders);
+  const [folderName, setFolderName] = useState("");
 
   return (
     <>
-      <h4>Manage your Folders</h4>
+      <h4>
+        <span className="brand">Foldio</span> - Manage your Folders
+      </h4>
       <Navigation
         handleNavigation={handleNavigation}
         renderedFolders={renderedFolders}
       />
       <br />
       {/* create btn */}
-      <button className="create-btn">Create</button>
+      <input
+        className="input-field"
+        placeholder="Folder Name"
+        onChange={(e) => setFolderName(e.target.value)}
+      ></input>
+      <button className="create-btn" onClick={handleCreate}>
+        Create
+      </button>
     </>
   );
 }
