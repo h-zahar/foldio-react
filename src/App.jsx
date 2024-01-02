@@ -16,6 +16,7 @@ function App() {
   };
 
   const handleNavigation = (e) => {
+    setClicked(e.target.value);
     setRenderedFolders(renderedFolders[e.target.value]);
   };
 
@@ -26,8 +27,14 @@ function App() {
     setFolderName("");
   };
 
+  const resetToHome = () => {
+    setRenderedFolders(folders);
+    setClicked("");
+  };
+
   const [renderedFolders, setRenderedFolders] = useState(folders);
   const [folderName, setFolderName] = useState("");
+  const [clicked, setClicked] = useState("");
 
   return (
     <>
@@ -43,6 +50,9 @@ function App() {
         handleCreate={handleCreate}
         setFolderName={setFolderName}
       />
+      <br />
+
+      {clicked && <button onClick={resetToHome}>{"<-"} Home</button>}
     </>
   );
 }
