@@ -41,14 +41,14 @@ function App() {
       <h4>
         <span className="brand">Foldio</span> - Manage your Folders
       </h4>
-      <Navigation
-        handleNavigation={handleNavigation}
-        renderedFolders={renderedFolders}
-      />
-      <br />
       <FolderCreation
         handleCreate={handleCreate}
         setFolderName={setFolderName}
+      />
+      <br />
+      <Navigation
+        handleNavigation={handleNavigation}
+        renderedFolders={renderedFolders}
       />
       <br />
 

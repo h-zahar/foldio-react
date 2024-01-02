@@ -12,7 +12,7 @@ const Navigation = ({ renderedFolders, handleNavigation }) => {
             value={f}
             onClick={handleNavigation}
           >
-            <FolderIcon width={50} height={50} />
+            <FolderIcon width={110} height={110} />
             {f}
           </button>
         );
