@@ -16,8 +16,8 @@ function App() {
   };
 
   const handleNavigation = (e) => {
-    setClicked(e.target.value);
-    setRenderedFolders(renderedFolders[e.target.value]);
+    setClicked(e.currentTarget.value);
+    setRenderedFolders(renderedFolders[e.currentTarget.value]);
   };
 
   const handleCreate = () => {

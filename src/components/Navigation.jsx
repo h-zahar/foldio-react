@@ -1,3 +1,5 @@
+import FolderIcon from "./FolderIcon";
+
 const Navigation = ({ renderedFolders, handleNavigation }) => {
   return (
     <>
@@ -10,6 +12,7 @@ const Navigation = ({ renderedFolders, handleNavigation }) => {
             value={f}
             onClick={handleNavigation}
           >
+            <FolderIcon width={50} height={50} />
             {f}
           </button>
         );
