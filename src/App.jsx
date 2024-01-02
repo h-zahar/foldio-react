@@ -28,11 +28,25 @@ function App() {
     const tmp = { ...renderedFolders };
     tmp[folderName] = {};
     setRenderedFolders(tmp);
+
+    const temp2 = { ...allFolders };
+
+    let currentFolder = temp2;
+
+    path.map((p) => {
+      const currentKey = p;
+      currentFolder[currentKey] = currentFolder[currentKey] || {};
+      currentFolder = currentFolder[currentKey];
+    });
+
+    currentFolder[folderName] = {};
+
+    setAllFolders(temp2);
   };
 
   const handleAccess = (e) => {
     if (path[path.length - 1] === path[Number(e.currentTarget.id)]) return;
-    let tmp = { ...folders };
+    let tmp = { ...allFolders };
     path.slice(0, Number(e.currentTarget.id) + 1).forEach((p) => {
       tmp = tmp[p];
     });
@@ -42,7 +56,7 @@ function App() {
   };
 
   const resetToHome = () => {
-    setRenderedFolders(folders);
+    setRenderedFolders(allFolders);
     setPath([]);
     setClicked("");
   };
@@ -51,6 +65,7 @@ function App() {
   const [folderName, setFolderName] = useState("");
   const [clicked, setClicked] = useState("");
   const [path, setPath] = useState([]);
+  const [allFolders, setAllFolders] = useState(folders);
 
   return (
     <>
