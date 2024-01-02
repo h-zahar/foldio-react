@@ -1,8 +1,24 @@
-# React + Vite
+# Foldio - A Better Folder Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A platform to organize and create folders, built with React + Vite.
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To run this frontend locally, follow these steps:
+
+### Prerequisites
+
+- Node.js and npm installed.
+
+### Installation
+
+1. Clone this repository: `https://github.com/h-zahar/foldio-react.git`
+2. Install dependencies: `npm install`
+3. Start the development server: `npm run dev`
+
+## Usage
+
+To use this frontend, follow these steps:
+
+1. Open your web browser and navigate to `http://localhost:3000` (or the port specified during installation).
+2. Explore the application.
