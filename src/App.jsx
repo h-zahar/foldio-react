@@ -96,7 +96,7 @@ function App() {
 
       {clicked && (
         <button onClick={resetToHome}>
-          <HomeIcon /> Home
+          <HomeIcon /> <span style={{ color: "#646cff" }}>Home</span>
         </button>
       )}
     </>
