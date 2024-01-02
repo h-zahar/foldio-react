@@ -38,9 +38,13 @@ function App() {
 
   return (
     <>
-      <h4>
-        <span className="brand">Foldio</span> - Manage your Folders
-      </h4>
+      <h2>
+        <span className="brand">Foldio</span>
+      </h2>
+      <div>
+        <span>&quot;Manage your Folders&quot;</span>
+      </div>
+
       <FolderCreation
         handleCreate={handleCreate}
         setFolderName={setFolderName}
