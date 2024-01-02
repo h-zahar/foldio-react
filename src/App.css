@@ -5,6 +5,10 @@
   text-align: center;
 }
 
+.brand {
+  color: #646cff;
+}
+
 .folder-btn {
   margin-left: 5px;
   margin-right: 5px;
@@ -18,4 +22,12 @@
 
 .create-btn:hover {
   border: 1px solid #000;
+}
+
+.input-field {
+  padding: 0.6em 1.2em;
+  margin-left: 5px;
+  margin-right: 5px;
+  border: 2px solid #646cff;
+  border-radius: 10px;
 }
