@@ -38,7 +38,6 @@ function App() {
         renderedFolders={renderedFolders}
       />
       <br />
-      {/* create btn */}
       <input
         className="input-field"
         placeholder="Folder Name"
