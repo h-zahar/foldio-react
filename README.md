@@ -1,6 +1,6 @@
 # Foldio - A Better Folder Management System
 
-A platform to organize and create folders, built with React + Vite.
+`[Initial Prototype]` A platform to organize and create folders, built with React + Vite.
 
 ## Getting Started
 
