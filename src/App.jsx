@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import Navigation from "./components/Navigation";
+import FolderCreation from "./components/FolderCreation";
 
 function App() {
   const folders = {
@@ -38,14 +39,10 @@ function App() {
         renderedFolders={renderedFolders}
       />
       <br />
-      <input
-        className="input-field"
-        placeholder="Folder Name"
-        onChange={(e) => setFolderName(e.target.value)}
-      ></input>
-      <button className="create-btn" onClick={handleCreate}>
-        Create
-      </button>
+      <FolderCreation
+        handleCreate={handleCreate}
+        setFolderName={setFolderName}
+      />
     </>
   );
 }
