@@ -18,6 +18,9 @@ function App() {
 
   const handleNavigation = (e) => {
     setClicked(e.currentTarget.value);
+    const tmp = [...path];
+    tmp.push(e.currentTarget.value);
+    setPath(tmp);
     setRenderedFolders(renderedFolders[e.currentTarget.value]);
   };
 
@@ -28,14 +31,27 @@ function App() {
     setFolderName("");
   };
 
+  const handleAccess = (e) => {
+    if (path[path.length - 1] === path[Number(e.currentTarget.id)]) return;
+    let tmp = { ...folders };
+    path.slice(0, Number(e.currentTarget.id) + 1).forEach((p) => {
+      tmp = tmp[p];
+    });
+    const newPath = path.slice(0, Number(e.currentTarget.id));
+    setPath(newPath);
+    setRenderedFolders(tmp);
+  };
+
   const resetToHome = () => {
     setRenderedFolders(folders);
+    setPath([]);
     setClicked("");
   };
 
   const [renderedFolders, setRenderedFolders] = useState(folders);
   const [folderName, setFolderName] = useState("");
   const [clicked, setClicked] = useState("");
+  const [path, setPath] = useState([]);
 
   return (
     <>
@@ -53,8 +69,23 @@ function App() {
       <br />
       <p>
         <strong>
-          <span className="brand">You{"'"}re at: </span>#
-          {!clicked ? "Home" : clicked}
+          <span
+            className="brand"
+            onClick={resetToHome}
+            style={{ cursor: "pointer" }}
+          >
+            @:{" "}
+          </span>
+          {path.length > 0
+            ? path.map((p, i) => {
+                return (
+                  <button id={i} key={p} onClick={handleAccess}>
+                    {" "}
+                    / {p}
+                  </button>
+                );
+              })
+            : "#Home"}
         </strong>
       </p>
       <Navigation
