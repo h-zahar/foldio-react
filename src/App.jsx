@@ -27,6 +27,9 @@ function App() {
         handleNavigation={handleNavigation}
         renderedFolders={renderedFolders}
       />
+      <br />
+      {/* create btn */}
+      <button className="create-btn">Create</button>
     </>
   );
 }
