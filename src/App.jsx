@@ -28,7 +28,6 @@ function App() {
     const tmp = { ...renderedFolders };
     tmp[folderName] = {};
     setRenderedFolders(tmp);
-    setFolderName("");
   };
 
   const handleAccess = (e) => {
@@ -37,7 +36,7 @@ function App() {
     path.slice(0, Number(e.currentTarget.id) + 1).forEach((p) => {
       tmp = tmp[p];
     });
-    const newPath = path.slice(0, Number(e.currentTarget.id));
+    const newPath = path.slice(0, Number(e.currentTarget.id) + 1);
     setPath(newPath);
     setRenderedFolders(tmp);
   };
@@ -79,7 +78,7 @@ function App() {
           {path.length > 0
             ? path.map((p, i) => {
                 return (
-                  <button id={i} key={p} onClick={handleAccess}>
+                  <button id={i} key={i} onClick={handleAccess}>
                     {" "}
                     / {p}
                   </button>
