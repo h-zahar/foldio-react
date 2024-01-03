@@ -44,6 +44,29 @@ function App() {
     setAllFolders(temp2);
   };
 
+  const handleDelete = (e) => {
+    const deleteFolder = e.currentTarget.id;
+    const tmp = { ...renderedFolders };
+    delete tmp[deleteFolder];
+
+    setRenderedFolders(tmp);
+
+    const temp2 = { ...allFolders };
+
+    let currentFolder = temp2;
+
+    path.map((p) => {
+      const currentKey = p;
+      currentFolder[currentKey] = currentFolder[currentKey] || {};
+      currentFolder = currentFolder[currentKey];
+    });
+
+    delete currentFolder[deleteFolder];
+
+    setAllFolders(temp2);
+    console.log(temp2);
+  };
+
   const handleAccess = (e) => {
     if (path[path.length - 1] === path[Number(e.currentTarget.id)]) return;
     let tmp = { ...allFolders };
@@ -104,6 +127,7 @@ function App() {
       </p>
       <Navigation
         handleNavigation={handleNavigation}
+        handleDelete={handleDelete}
         renderedFolders={renderedFolders}
       />
       <br />
