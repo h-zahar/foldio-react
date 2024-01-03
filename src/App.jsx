@@ -3,6 +3,7 @@ import "./App.css";
 import Navigation from "./components/Navigation";
 import FolderCreation from "./components/FolderCreation";
 import HomeIcon from "./components/HomeIcon";
+import Dialog from "./components/Dialog";
 
 function App() {
   const folders = {
@@ -45,7 +46,8 @@ function App() {
   };
 
   const handleDelete = (e) => {
-    const deleteFolder = e.currentTarget.id;
+    // console.log(e.currentTarget);
+    const deleteFolder = e.id;
     const tmp = { ...renderedFolders };
     delete tmp[deleteFolder];
 
@@ -84,12 +86,19 @@ function App() {
     setClicked("");
   };
 
+  const handleModal = (e) => {
+    setCurrEvent(e.currentTarget);
+    setIsDeleteModalOpen(!isDeleteModalOpen);
+  };
+
   const [renderedFolders, setRenderedFolders] = useState(folders);
   const [folderName, setFolderName] = useState("");
   const [clicked, setClicked] = useState("");
   const [path, setPath] = useState([]);
   const [allFolders, setAllFolders] = useState(folders);
-
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [currEvent, setCurrEvent] = useState(null);
+  // console.log(isDeleteModalOpen);
   return (
     <>
       <h2>
@@ -125,9 +134,10 @@ function App() {
             : "#Home"}
         </strong>
       </p>
+      <br />
       <Navigation
         handleNavigation={handleNavigation}
-        handleDelete={handleDelete}
+        handleDelete={handleModal}
         renderedFolders={renderedFolders}
       />
       <br />
@@ -138,6 +148,13 @@ function App() {
           <HomeIcon /> <span style={{ color: "#646cff" }}>Home</span>
         </button>
       )}
+
+      <Dialog
+        isOpen={isDeleteModalOpen}
+        setIsOpen={setIsDeleteModalOpen}
+        handleDelete={handleDelete}
+        e={currEvent}
+      />
     </>
   );
 }
