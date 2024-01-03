@@ -64,7 +64,7 @@ function App() {
     delete currentFolder[deleteFolder];
 
     setAllFolders(temp2);
-    console.log(temp2);
+    // console.log(temp2);
   };
 
   const handleAccess = (e) => {
