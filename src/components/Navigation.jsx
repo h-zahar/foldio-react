@@ -4,13 +4,15 @@ import FolderIcon from "./FolderIcon";
 const Navigation = ({ renderedFolders, handleNavigation, handleDelete }) => {
   return (
     <>
-      {Object.keys(renderedFolders).length === 0 && <p>No folder found!</p>}
-      {Object.keys(renderedFolders).map((f) => {
+      {Object.keys(renderedFolders.children).length === 0 && (
+        <p>No folder found!</p>
+      )}
+      {Object.keys(renderedFolders.children).map((f) => {
         return (
           <div key={f} style={{ display: "inline-block" }}>
             <button className="folder-btn" value={f} onClick={handleNavigation}>
               <FolderIcon width={110} height={110} />
-              {f}
+              {renderedFolders.children[f].name}
             </button>
             <button id={f} className="delete-btn" onClick={handleDelete}>
               <DeleteIcon width={25} height={25} />

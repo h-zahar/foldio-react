@@ -6,7 +6,7 @@ import HomeIcon from "./components/HomeIcon";
 import Dialog from "./components/Dialog";
 
 function App() {
-  const folders = {
+  const folders1 = {
     folder1: {},
     folder2: {},
     folder3: {
@@ -17,17 +17,89 @@ function App() {
     },
   };
 
+  const folders = {
+    name: "root",
+    children: {
+      id1: {
+        name: "folder1",
+        children: {},
+      },
+      id2: {
+        name: "folder2",
+        children: {},
+      },
+      id3: {
+        name: "folder3",
+        children: {
+          id4: {
+            name: "sub1",
+            children: {},
+          },
+          id5: {
+            name: "sub2",
+            children: {
+              id6: {
+                name: "subsub1",
+                children: {},
+              },
+            },
+          },
+        },
+      },
+    },
+  };
+
+  // const testFolders = {
+  //   id1: {
+  //     name: "whdnc",
+  //     desc: "kwjbdc",
+  //     child: {
+  //       id21: {
+  //         name: "ljnk",
+  //         desc: "kwjdn",
+  //         child: {},
+  //       },
+  //       id31: {
+  //         name: "lkjh",
+  //         desc: "kjbwd",
+  //         child: {
+  //           id41: {
+  //             desc: "",
+  //             child: {},
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+  //   id2: {
+  //     name: "jkn",
+  //     desc: "kjb",
+  //     child: {},
+  //   },
+  // };
+
+  // let obj = {
+  //   id1: {title: 'Folder 1', parent: 0, child:['id2','id4']},
+  //   id2: {title: 'Folder 1 1', parent: 'id1', child:[]},
+  //   id3: {title: 'Folder 2', parent: 0, child:[]},
+  //   id4: {title: 'Folder 2 1', parent: 'id1', child:[]},
+  // }
+
+  // <Folder parent={id1} />
+
   const handleNavigation = (e) => {
-    setClicked(e.currentTarget.value);
+    // setClicked(e.currentTarget.value);
     const tmp = [...path];
     tmp.push(e.currentTarget.value);
     setPath(tmp);
-    setRenderedFolders(renderedFolders[e.currentTarget.value]);
+    // console.log(renderedFolders);
+    setRenderedFolders(renderedFolders.children[e.currentTarget.value]);
   };
 
   const handleCreate = () => {
+    const fId = new Date().getTime();
     const tmp = { ...renderedFolders };
-    tmp[folderName] = {};
+    tmp.children[fId] = { name: folderName, children: {} };
     setRenderedFolders(tmp);
 
     const temp2 = { ...allFolders };
@@ -36,11 +108,12 @@ function App() {
 
     path.map((p) => {
       const currentKey = p;
-      currentFolder[currentKey] = currentFolder[currentKey] || {};
-      currentFolder = currentFolder[currentKey];
+      currentFolder.children[currentKey] =
+        currentFolder.children[currentKey] || {};
+      currentFolder = currentFolder.children[currentKey];
     });
 
-    currentFolder[folderName] = {};
+    currentFolder.children[fId] = { name: folderName, children: {} };
 
     setAllFolders(temp2);
   };
@@ -49,8 +122,8 @@ function App() {
     // console.log(e.currentTarget);
     const deleteFolder = e.id;
     const tmp = { ...renderedFolders };
-    delete tmp[deleteFolder];
-
+    delete tmp.children[deleteFolder];
+    // console.log(tmp);
     setRenderedFolders(tmp);
 
     const temp2 = { ...allFolders };
@@ -59,8 +132,9 @@ function App() {
 
     path.map((p) => {
       const currentKey = p;
-      currentFolder[currentKey] = currentFolder[currentKey] || {};
-      currentFolder = currentFolder[currentKey];
+      currentFolder.children[currentKey] =
+        currentFolder.children[currentKey] || {};
+      currentFolder = currentFolder.children[currentKey];
     });
 
     delete currentFolder[deleteFolder];
@@ -73,7 +147,7 @@ function App() {
     if (path[path.length - 1] === path[Number(e.currentTarget.id)]) return;
     let tmp = { ...allFolders };
     path.slice(0, Number(e.currentTarget.id) + 1).forEach((p) => {
-      tmp = tmp[p];
+      tmp = tmp.children[p];
     });
     const newPath = path.slice(0, Number(e.currentTarget.id) + 1);
     setPath(newPath);
@@ -83,7 +157,7 @@ function App() {
   const resetToHome = () => {
     setRenderedFolders(allFolders);
     setPath([]);
-    setClicked("");
+    // setClicked("");
   };
 
   const handleModal = (e) => {
@@ -93,12 +167,12 @@ function App() {
 
   const [renderedFolders, setRenderedFolders] = useState(folders);
   const [folderName, setFolderName] = useState("");
-  const [clicked, setClicked] = useState("");
+  // const [clicked, setClicked] = useState("");
   const [path, setPath] = useState([]);
   const [allFolders, setAllFolders] = useState(folders);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currEvent, setCurrEvent] = useState(null);
-  // console.log(isDeleteModalOpen);
+  let tempFolders = { ...folders };
   return (
     <>
       <h2>
@@ -114,25 +188,27 @@ function App() {
       />
       <br />
       <p>
-        <strong>
-          <span
-            className="brand"
-            onClick={resetToHome}
-            style={{ cursor: "pointer" }}
-          >
-            @:{" "}
-          </span>
-          {path.length > 0
-            ? path.map((p, i) => {
-                return (
-                  <button id={i} key={i} onClick={handleAccess}>
-                    {" "}
-                    / {p}
-                  </button>
-                );
-              })
-            : "#Home"}
-        </strong>
+        {/* <strong> */}
+        <span
+          // className="brand"
+          onClick={resetToHome}
+          style={{ cursor: "pointer" }}
+        >
+          <span className="brand">@: </span>#Root {/* </span> */}
+          {path.length > 0 &&
+            path.map((p, i) => {
+              // let tmp = { ...allFolders };
+              const fName = tempFolders.children[p].name;
+              tempFolders = tempFolders.children[p];
+              return (
+                <button id={i} key={i} onClick={handleAccess}>
+                  {" "}
+                  / {fName}
+                </button>
+              );
+            })}
+        </span>
+        {/* </strong> */}
       </p>
       <br />
       <Navigation
@@ -143,11 +219,11 @@ function App() {
       <br />
       <br />
 
-      {clicked && (
+      {/* {clicked && (
         <button onClick={resetToHome}>
           <HomeIcon /> <span style={{ color: "#646cff" }}>Home</span>
         </button>
-      )}
+      )} */}
 
       <Dialog
         isOpen={isDeleteModalOpen}
