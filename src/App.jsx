@@ -96,6 +96,17 @@ function App() {
     setRenderedFolders(renderedFolders.children[e.currentTarget.id]);
   };
 
+  const getFName = (fN, og, i) => {
+    i = !i ? 0 : i;
+
+    const foundD = Object.values(renderedFolders.children).filter(
+      (f) => f.name === fN
+    );
+
+    if (foundD.length === 0) return fN;
+    return getFName(og + ` (${i + 1})`, og, ++i);
+  };
+
   const handleCreate = (nFName = "") => {
     const fId = new Date().getTime();
 
@@ -108,14 +119,7 @@ function App() {
     // }
     // console.log(renderedFolders.children);
 
-    const isFound = Object.values(renderedFolders.children).findIndex(
-      (f) => f.name === nFName
-    );
-
-    nFName =
-      isFound === -1 ? nFName : "new-" + nFName + "-" + new Date().getTime();
-
-    const fName = nFName || folderName;
+    const fName = getFName(nFName, nFName, null) || folderName;
     const tmp = { ...renderedFolders };
     tmp.children[fId] = { name: fName, children: {} };
     setRenderedFolders(tmp);
