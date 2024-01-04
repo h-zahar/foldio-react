@@ -6,16 +6,16 @@ import HomeIcon from "./components/HomeIcon";
 import Dialog from "./components/Dialog";
 
 function App() {
-  const folders1 = {
-    folder1: {},
-    folder2: {},
-    folder3: {
-      sub1: {},
-      sub2: {
-        subsub1: {},
-      },
-    },
-  };
+  // const folders1 = {
+  //   folder1: {},
+  //   folder2: {},
+  //   folder3: {
+  //     sub1: {},
+  //     sub2: {
+  //       subsub1: {},
+  //     },
+  //   },
+  // };
 
   const folders = {
     name: "root",
@@ -90,10 +90,10 @@ function App() {
   const handleNavigation = (e) => {
     // setClicked(e.currentTarget.value);
     const tmp = [...path];
-    tmp.push(e.currentTarget.value);
+    tmp.push([e.currentTarget.id, e.currentTarget.value]);
     setPath(tmp);
     // console.log(renderedFolders);
-    setRenderedFolders(renderedFolders.children[e.currentTarget.value]);
+    setRenderedFolders(renderedFolders.children[e.currentTarget.id]);
   };
 
   const handleCreate = () => {
@@ -107,7 +107,7 @@ function App() {
     let currentFolder = temp2;
 
     path.map((p) => {
-      const currentKey = p;
+      const currentKey = p[0];
       currentFolder.children[currentKey] =
         currentFolder.children[currentKey] || {};
       currentFolder = currentFolder.children[currentKey];
@@ -131,7 +131,7 @@ function App() {
     let currentFolder = temp2;
 
     path.map((p) => {
-      const currentKey = p;
+      const currentKey = p[0];
       currentFolder.children[currentKey] =
         currentFolder.children[currentKey] || {};
       currentFolder = currentFolder.children[currentKey];
@@ -147,7 +147,7 @@ function App() {
     if (path[path.length - 1] === path[Number(e.currentTarget.id)]) return;
     let tmp = { ...allFolders };
     path.slice(0, Number(e.currentTarget.id) + 1).forEach((p) => {
-      tmp = tmp.children[p];
+      tmp = tmp.children[p[0]];
     });
     const newPath = path.slice(0, Number(e.currentTarget.id) + 1);
     setPath(newPath);
@@ -172,7 +172,7 @@ function App() {
   const [allFolders, setAllFolders] = useState(folders);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currEvent, setCurrEvent] = useState(null);
-  let tempFolders = { ...folders };
+
   return (
     <>
       <h2>
@@ -198,12 +198,12 @@ function App() {
           {path.length > 0 &&
             path.map((p, i) => {
               // let tmp = { ...allFolders };
-              const fName = tempFolders.children[p].name;
-              tempFolders = tempFolders.children[p];
+              // const fName = tempFolders.children[p].name;
+              // tempFolders = tempFolders.children[p];
               return (
                 <button id={i} key={i} onClick={handleAccess}>
                   {" "}
-                  / {fName}
+                  / {p[1]}
                 </button>
               );
             })}

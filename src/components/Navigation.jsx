@@ -10,7 +10,12 @@ const Navigation = ({ renderedFolders, handleNavigation, handleDelete }) => {
       {Object.keys(renderedFolders.children).map((f) => {
         return (
           <div key={f} style={{ display: "inline-block" }}>
-            <button className="folder-btn" value={f} onClick={handleNavigation}>
+            <button
+              className="folder-btn"
+              id={f}
+              value={renderedFolders.children[f].name}
+              onClick={handleNavigation}
+            >
               <FolderIcon width={110} height={110} />
               {renderedFolders.children[f].name}
             </button>
