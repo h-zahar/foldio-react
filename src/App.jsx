@@ -96,10 +96,11 @@ function App() {
     setRenderedFolders(renderedFolders.children[e.currentTarget.id]);
   };
 
-  const handleCreate = () => {
+  const handleCreate = (nFName = "") => {
     const fId = new Date().getTime();
+    const fName = nFName || folderName;
     const tmp = { ...renderedFolders };
-    tmp.children[fId] = { name: folderName, children: {} };
+    tmp.children[fId] = { name: fName, children: {} };
     setRenderedFolders(tmp);
 
     const temp2 = { ...allFolders };
@@ -113,7 +114,7 @@ function App() {
       currentFolder = currentFolder.children[currentKey];
     });
 
-    currentFolder.children[fId] = { name: folderName, children: {} };
+    currentFolder.children[fId] = { name: fName, children: {} };
 
     setAllFolders(temp2);
   };
@@ -185,6 +186,7 @@ function App() {
 
       <FolderCreation
         handleCreate={handleCreate}
+        folderName={folderName}
         setFolderName={setFolderName}
       />
       <br />
