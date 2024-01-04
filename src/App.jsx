@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import Navigation from "./components/Navigation";
 import FolderCreation from "./components/FolderCreation";
-import HomeIcon from "./components/HomeIcon";
+// import HomeIcon from "./components/HomeIcon";
 import Dialog from "./components/Dialog";
 
 function App() {
