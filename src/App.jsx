@@ -98,6 +98,11 @@ function App() {
 
   const handleCreate = (nFName = "") => {
     const fId = new Date().getTime();
+
+    if (nFName === "" || nFName === null) {
+      return alert("No Folder Created!!");
+    }
+
     const fName = nFName || folderName;
     const tmp = { ...renderedFolders };
     tmp.children[fId] = { name: fName, children: {} };
