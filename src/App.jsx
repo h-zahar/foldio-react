@@ -103,6 +103,18 @@ function App() {
       return alert("No Folder Created!!");
     }
 
+    // if (renderedFolders.children[path[path.length - 1][0]] === nFName) {
+    //   nFName = "bla vla";
+    // }
+    // console.log(renderedFolders.children);
+
+    const isFound = Object.values(renderedFolders.children).findIndex(
+      (f) => f.name === nFName
+    );
+
+    nFName =
+      isFound === -1 ? nFName : "new-" + nFName + "-" + new Date().getTime();
+
     const fName = nFName || folderName;
     const tmp = { ...renderedFolders };
     tmp.children[fId] = { name: fName, children: {} };
