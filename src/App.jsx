@@ -172,7 +172,7 @@ function App() {
   const [allFolders, setAllFolders] = useState(folders);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currEvent, setCurrEvent] = useState(null);
-
+  console.log(path);
   return (
     <>
       <h2>
@@ -194,20 +194,20 @@ function App() {
           onClick={resetToHome}
           style={{ cursor: "pointer" }}
         >
-          <span className="brand">@: </span>#Root {/* </span> */}
-          {path.length > 0 &&
-            path.map((p, i) => {
-              // let tmp = { ...allFolders };
-              // const fName = tempFolders.children[p].name;
-              // tempFolders = tempFolders.children[p];
-              return (
-                <button id={i} key={i} onClick={handleAccess}>
-                  {" "}
-                  / {p[1]}
-                </button>
-              );
-            })}
+          <span className="brand">@: </span>#Root{" "}
         </span>
+        {path.length > 0 &&
+          path.map((p, i) => {
+            // let tmp = { ...allFolders };
+            // const fName = tempFolders.children[p].name;
+            // tempFolders = tempFolders.children[p];
+            return (
+              <button id={i} key={i} onClick={handleAccess}>
+                {" "}
+                / {p[1]}
+              </button>
+            );
+          })}
         {/* </strong> */}
       </p>
       <br />
