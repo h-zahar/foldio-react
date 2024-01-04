@@ -172,7 +172,8 @@ function App() {
   const [allFolders, setAllFolders] = useState(folders);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currEvent, setCurrEvent] = useState(null);
-  console.log(path);
+  // console.log(path);
+
   return (
     <>
       <h2>
