@@ -255,7 +255,7 @@ function App() {
     const pth = JSON.parse(localStorage.getItem("path"));
     const fc = JSON.parse(localStorage.getItem("folderColor"));
 
-    if (frs === null || Object.keys(allFolders.children)?.length === 0) {
+    if (frs === null || Object.keys(frs.children)?.length === 0) {
       setAllFolders(folders);
       localStorage.setItem("allFolders", JSON.stringify(folders));
       setRenderedFolders(folders);
