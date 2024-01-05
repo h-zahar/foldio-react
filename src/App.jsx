@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Navigation from "./components/Navigation";
 import FolderCreation from "./components/FolderCreation";
@@ -92,8 +92,13 @@ function App() {
     const tmp = [...path];
     tmp.push([e.currentTarget.id, e.currentTarget.value]);
     setPath(tmp);
+    localStorage.setItem("path", JSON.stringify(tmp));
     // console.log(renderedFolders);
     setRenderedFolders(renderedFolders.children[e.currentTarget.id]);
+    localStorage.setItem(
+      "renderedFolders",
+      JSON.stringify(renderedFolders.children[e.currentTarget.id])
+    );
   };
 
   const getFName = (fN, og, i) => {
@@ -123,6 +128,7 @@ function App() {
     const tmp = { ...renderedFolders };
     tmp.children[fId] = { name: fName, children: {} };
     setRenderedFolders(tmp);
+    localStorage.setItem("renderedFolders", JSON.stringify(tmp));
 
     const temp2 = { ...allFolders };
 
@@ -138,6 +144,7 @@ function App() {
     currentFolder.children[fId] = { name: fName, children: {} };
 
     setAllFolders(temp2);
+    localStorage.setItem("allFolders", JSON.stringify(temp2));
   };
 
   const handleDelete = (e) => {
@@ -147,6 +154,7 @@ function App() {
     delete tmp.children[deleteFolder];
     // console.log(tmp);
     setRenderedFolders(tmp);
+    localStorage.setItem("renderedFolders", JSON.stringify(tmp));
 
     const temp2 = { ...allFolders };
 
@@ -162,6 +170,7 @@ function App() {
     delete currentFolder[deleteFolder];
 
     setAllFolders(temp2);
+    localStorage.setItem("allFolders", JSON.stringify(temp2));
     // console.log(temp2);
   };
 
@@ -173,12 +182,16 @@ function App() {
     });
     const newPath = path.slice(0, Number(e.currentTarget.id) + 1);
     setPath(newPath);
+    localStorage.setItem("path", JSON.stringify(newPath));
     setRenderedFolders(tmp);
+    localStorage.setItem("renderedFolders", JSON.stringify(tmp));
   };
 
   const resetToHome = () => {
     setRenderedFolders(allFolders);
+    localStorage.setItem("renderedFolders", JSON.stringify(allFolders));
     setPath([]);
+    localStorage.setItem("path", JSON.stringify([]));
     // setClicked("");
   };
 
@@ -195,6 +208,25 @@ function App() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currEvent, setCurrEvent] = useState(null);
   // console.log(path);
+
+  useEffect(() => {
+    const frs = JSON.parse(localStorage.getItem("allFolders"));
+    const rFrs = JSON.parse(localStorage.getItem("renderedFolders"));
+    const pth = JSON.parse(localStorage.getItem("path"));
+
+    if (frs === null) {
+      setAllFolders(folders);
+      localStorage.setItem("allFolders", JSON.stringify(folders));
+      setRenderedFolders(folders);
+      localStorage.setItem("renderedFolders", JSON.stringify(folders));
+      setPath([]);
+      localStorage.setItem("path", JSON.stringify([]));
+    } else {
+      setAllFolders(frs);
+      setRenderedFolders(rFrs);
+      setPath(pth);
+    }
+  }, []);
 
   return (
     <>
