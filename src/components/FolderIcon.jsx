@@ -1,4 +1,15 @@
 const FolderIcon = ({ width = 50, height = 50, color = "default" }) => {
+  // const hexOpa = (hex, opacity) => {
+  //   if (hex.startsWith("#")) {
+  //     hex = hex.slice(1);
+  //   }
+  //   const bigint = parseInt(hex, 16);
+  //   const red = (bigint >> 16) & 255;
+  //   const green = (bigint >> 8) & 255;
+  //   const blue = bigint & 255;
+
+  //   return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
+  // };
   return (
     <div>
       <svg
@@ -23,7 +34,7 @@ const FolderIcon = ({ width = 50, height = 50, color = "default" }) => {
         />
         <path
           d="M704 512c0-20.7-1.4-41.1-4.1-61H576.1l-46.5-95.3c-10.7-22-33.1-35.9-57.5-35.9H128c-35.3 0-64 28.7-64 64V899c0 6.7 1 13.2 3 19.3C124.4 945 188.5 960 256 960c247.4 0 448-200.6 448-448z"
-          fill={color === "default" ? "#536DFE" : color}
+          fill={color === "default" ? "#536DFE" : "rgba(255, 255, 255, 0.1)"}
         />
       </svg>
     </div>
