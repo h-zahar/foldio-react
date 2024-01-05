@@ -37,7 +37,7 @@ const Navigation = ({
                 background: "white",
                 border: "1px solid transparent",
               }}
-              onClick={handleChange}
+              onClick={(e) => handleChange(e)}
             >
               <SettingsIcon />
             </button>

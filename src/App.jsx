@@ -231,6 +231,11 @@ function App() {
     setIsSettingsModalOpen(!isSettingsModalOpen);
   };
 
+  const getCurrColor = (e) => {
+    const key = e.id;
+    return renderedFolders.children[key]?.color;
+  };
+
   const [renderedFolders, setRenderedFolders] = useState(folders);
   const [folderName, setFolderName] = useState("");
   // const [clicked, setClicked] = useState("");
@@ -250,7 +255,7 @@ function App() {
     const pth = JSON.parse(localStorage.getItem("path"));
     const fc = JSON.parse(localStorage.getItem("folderColor"));
 
-    if (frs === null) {
+    if (frs === null || Object.keys(allFolders.children)?.length === 0) {
       setAllFolders(folders);
       localStorage.setItem("allFolders", JSON.stringify(folders));
       setRenderedFolders(folders);
@@ -305,6 +310,18 @@ function App() {
         {/* </strong> */}
       </p>
       <br />
+      <Settings
+        isOpen={isSettingsModalOpen}
+        handleChange={handleSettings}
+        setIsOpen={setIsSettingsModalOpen}
+        folderColor={folderColor}
+        setFolderColor={setFolderColor}
+        e={currNewEvent}
+        getCurrColor={getCurrColor}
+      />
+      <br />
+      <br />
+      <br />
       <Navigation
         handleNavigation={handleNavigation}
         handleDelete={handleModal}
@@ -325,14 +342,6 @@ function App() {
         setIsOpen={setIsDeleteModalOpen}
         handleDelete={handleDelete}
         e={currEvent}
-      />
-      <Settings
-        isOpen={isSettingsModalOpen}
-        handleChange={handleSettings}
-        setIsOpen={setIsSettingsModalOpen}
-        folderColor={folderColor}
-        setFolderColor={setFolderColor}
-        e={currNewEvent}
       />
     </>
   );
