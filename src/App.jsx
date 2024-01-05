@@ -110,7 +110,7 @@ function App() {
   const handleCreate = (nFName = "") => {
     const fId = new Date().getTime();
 
-    if (nFName === "" || nFName === null) {
+    if (nFName.trim() === "" || nFName === null) {
       return alert("No Folder Created!!");
     }
 
