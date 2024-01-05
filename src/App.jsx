@@ -168,7 +168,7 @@ function App() {
       currentFolder = currentFolder.children[currentKey];
     });
 
-    delete currentFolder[deleteFolder];
+    delete currentFolder.children[deleteFolder];
 
     setAllFolders(temp2);
     localStorage.setItem("allFolders", JSON.stringify(temp2));
