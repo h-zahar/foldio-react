@@ -22,13 +22,13 @@
 }
 
 .delete-btn {
-  transform: translate(-100%, -330%) scale(1);
+  transform: translate(-390%, -360%) scale(1);
   padding: 0;
 }
 
 .delete-btn:hover {
   border-color: transparent;
-  transform: translate(-100%, -330%) scale(1.2);
+  transform: translate(-390%, -360%) scale(1.2);
   transition: all 0.5s;
 }
 

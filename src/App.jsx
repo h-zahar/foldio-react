@@ -4,6 +4,7 @@ import Navigation from "./components/Navigation";
 import FolderCreation from "./components/FolderCreation";
 // import HomeIcon from "./components/HomeIcon";
 import Dialog from "./components/Dialog";
+import Settings from "./components/Settings";
 
 function App() {
   // const folders1 = {
@@ -174,6 +175,31 @@ function App() {
     // console.log(temp2);
   };
 
+  const handleSettings = (e, value) => {
+    const changedFolder = e.id;
+    const tmp = { ...renderedFolders };
+    tmp.children[changedFolder].color = value;
+    // console.log(tmp);
+    setRenderedFolders(tmp);
+    localStorage.setItem("renderedFolders", JSON.stringify(tmp));
+
+    const temp2 = { ...allFolders };
+
+    let currentFolder = temp2;
+
+    path.map((p) => {
+      const currentKey = p[0];
+      currentFolder.children[currentKey] =
+        currentFolder.children[currentKey] || {};
+      currentFolder = currentFolder.children[currentKey];
+    });
+
+    currentFolder.children[changedFolder].color = value;
+
+    setAllFolders(temp2);
+    localStorage.setItem("allFolders", JSON.stringify(temp2));
+  };
+
   const handleAccess = (e) => {
     if (path[path.length - 1] === path[Number(e.currentTarget.id)]) return;
     let tmp = { ...allFolders };
@@ -200,6 +226,11 @@ function App() {
     setIsDeleteModalOpen(!isDeleteModalOpen);
   };
 
+  const handleChangeModal = (e) => {
+    setCurrNewEvent(e.currentTarget);
+    setIsSettingsModalOpen(!isSettingsModalOpen);
+  };
+
   const [renderedFolders, setRenderedFolders] = useState(folders);
   const [folderName, setFolderName] = useState("");
   // const [clicked, setClicked] = useState("");
@@ -207,12 +238,17 @@ function App() {
   const [allFolders, setAllFolders] = useState(folders);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currEvent, setCurrEvent] = useState(null);
+  const [currNewEvent, setCurrNewEvent] = useState(null);
+
+  const [folderColor, setFolderColor] = useState("default");
   // console.log(path);
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
 
   useEffect(() => {
     const frs = JSON.parse(localStorage.getItem("allFolders"));
     const rFrs = JSON.parse(localStorage.getItem("renderedFolders"));
     const pth = JSON.parse(localStorage.getItem("path"));
+    const fc = JSON.parse(localStorage.getItem("folderColor"));
 
     if (frs === null) {
       setAllFolders(folders);
@@ -220,11 +256,13 @@ function App() {
       setRenderedFolders(folders);
       localStorage.setItem("renderedFolders", JSON.stringify(folders));
       setPath([]);
+      setFolderColor("default");
       localStorage.setItem("path", JSON.stringify([]));
     } else {
       setAllFolders(frs);
       setRenderedFolders(rFrs);
       setPath(pth);
+      setFolderColor(fc);
     }
   }, []);
 
@@ -270,6 +308,7 @@ function App() {
       <Navigation
         handleNavigation={handleNavigation}
         handleDelete={handleModal}
+        handleChange={handleChangeModal}
         renderedFolders={renderedFolders}
       />
       <br />
@@ -286,6 +325,14 @@ function App() {
         setIsOpen={setIsDeleteModalOpen}
         handleDelete={handleDelete}
         e={currEvent}
+      />
+      <Settings
+        isOpen={isSettingsModalOpen}
+        handleChange={handleSettings}
+        setIsOpen={setIsSettingsModalOpen}
+        folderColor={folderColor}
+        setFolderColor={setFolderColor}
+        e={currNewEvent}
       />
     </>
   );
