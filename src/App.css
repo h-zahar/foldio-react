@@ -17,8 +17,8 @@
 .custom-picker {
   border: none;
   cursor: pointer;
-  width: 100px;
-  height: 100px;
+  width: 35px;
+  height: 35px;
   background-color: transparent;
 }
 
@@ -27,9 +27,19 @@
   border-radius: 50%;
 }
 
+.custom-picker::-webkit-color-swatch:hover {
+  transform: scale(1.2);
+  transition: 0.4s all;
+}
+
 .custom-picker::-moz-color-swatch {
   border: none;
   border-radius: 50%;
+}
+
+.custom-picker::-moz-color-swatch:hover {
+  transform: scale(1.2);
+  transition: 0.4s all;
 }
 
 .create-btn {
