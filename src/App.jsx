@@ -322,9 +322,6 @@ function App() {
         e={currNewEvent}
         getCurrColor={getCurrColor}
       />
-      <br />
-      <br />
-      <br />
       <Navigation
         handleNavigation={handleNavigation}
         handleDelete={handleModal}

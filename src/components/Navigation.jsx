@@ -19,7 +19,7 @@ const Navigation = ({
         Object.keys(renderedFolders?.children)?.map((f) => {
           // console.log(f, getCurrColor(f));
           return (
-            <div key={f} style={{ display: "inline-block" }}>
+            <div key={f} style={{ display: "inline-block", marginTop: "60px" }}>
               <button
                 className="folder-btn"
                 id={f}
