@@ -269,7 +269,7 @@ function App() {
     } else {
       setAllFolders(frs);
       setRenderedFolders(rFrs);
-      // setPath(pth);
+      setPath(!pth ? [] : pth);
       setFolderColor(fc);
     }
   }, []);
