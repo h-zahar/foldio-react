@@ -4,7 +4,7 @@ import Navigation from "./components/Navigation";
 import FolderCreation from "./components/FolderCreation";
 // import HomeIcon from "./components/HomeIcon";
 import Dialog from "./components/Dialog";
-import Settings from "./components/Settings";
+// import Settings from "./components/Settings";
 
 function App() {
   // const folders1 = {
@@ -18,37 +18,37 @@ function App() {
   //   },
   // };
 
-  const folders = {
-    name: "root",
-    children: {
-      id1: {
-        name: "folder1",
-        children: {},
-      },
-      id2: {
-        name: "folder2",
-        children: {},
-      },
-      id3: {
-        name: "folder3",
-        children: {
-          id4: {
-            name: "sub1",
-            children: {},
-          },
-          id5: {
-            name: "sub2",
-            children: {
-              id6: {
-                name: "subsub1",
-                children: {},
-              },
-            },
-          },
-        },
-      },
-    },
-  };
+  // const folders = {
+  //   name: "root",
+  //   children: {
+  //     id1: {
+  //       name: "folder1",
+  //       children: {},
+  //     },
+  //     id2: {
+  //       name: "folder2",
+  //       children: {},
+  //     },
+  //     id3: {
+  //       name: "folder3",
+  //       children: {
+  //         id4: {
+  //           name: "sub1",
+  //           children: {},
+  //         },
+  //         id5: {
+  //           name: "sub2",
+  //           children: {
+  //             id6: {
+  //               name: "subsub1",
+  //               children: {},
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+  // };
 
   // const testFolders = {
   //   id1: {
@@ -228,10 +228,10 @@ function App() {
     setIsDeleteModalOpen(!isDeleteModalOpen);
   };
 
-  const handleChangeModal = (e) => {
-    setCurrNewEvent(e.currentTarget);
-    setIsSettingsModalOpen(!isSettingsModalOpen);
-  };
+  // const handleChangeModal = (e) => {
+  //   setCurrNewEvent(e.currentTarget);
+  //   setIsSettingsModalOpen(!isSettingsModalOpen);
+  // };
 
   const getCurrColor = (e) => {
     const key = e;
@@ -246,17 +246,19 @@ function App() {
   const [allFolders, setAllFolders] = useState({});
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currEvent, setCurrEvent] = useState(null);
-  const [currNewEvent, setCurrNewEvent] = useState(null);
+  // const [currNewEvent, setCurrNewEvent] = useState(null);
 
-  const [folderColor, setFolderColor] = useState("default");
+  // const [folderColor, setFolderColor] = useState("default");
   // console.log(path);
-  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  // const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const [order, setOrder] = useState(0);
 
   useEffect(() => {
     const frs = JSON.parse(localStorage.getItem("allFolders"));
     const rFrs = JSON.parse(localStorage.getItem("renderedFolders"));
     const pth = JSON.parse(localStorage.getItem("path"));
-    const fc = JSON.parse(localStorage.getItem("folderColor"));
+    // const fc = JSON.parse(localStorage.getItem("folderColor"));
+    const odr = JSON.parse(localStorage.getItem("order"));
 
     if (frs === null || Object.keys(frs.children)?.length === 0) {
       // setAllFolders(folders);
@@ -270,7 +272,8 @@ function App() {
       setAllFolders(frs);
       setRenderedFolders(rFrs);
       setPath(!pth ? [] : pth);
-      setFolderColor(fc);
+      // setFolderColor(fc);
+      setOrder(!odr ? 0 : odr);
     }
   }, []);
 
@@ -289,6 +292,22 @@ function App() {
         setFolderName={setFolderName}
       />
       <br />
+      <div>
+        <select
+          value={order}
+          onChange={(e) => {
+            setOrder(Number(e.target.value));
+            localStorage.setItem(
+              "order",
+              JSON.stringify(Number(e.target.value))
+            );
+          }}
+        >
+          <option value={0}>Default</option>
+          <option value={1}>ASC</option>
+          <option value={2}>DESC</option>
+        </select>
+      </div>
       <p>
         {/* <strong> */}
         <span
@@ -313,21 +332,22 @@ function App() {
         {/* </strong> */}
       </p>
       <br />
-      <Settings
+      {/* <Settings
         isOpen={isSettingsModalOpen}
         handleChange={handleSettings}
         setIsOpen={setIsSettingsModalOpen}
         folderColor={folderColor}
         setFolderColor={setFolderColor}
-        e={currNewEvent}
+        // e={currNewEvent}
         getCurrColor={getCurrColor}
-      />
+      /> */}
       <Navigation
         handleNavigation={handleNavigation}
         handleDelete={handleModal}
         handleChange={handleSettings}
         renderedFolders={renderedFolders}
         getCurrColor={getCurrColor}
+        order={order}
       />
       <br />
       <br />

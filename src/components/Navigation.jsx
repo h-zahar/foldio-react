@@ -1,37 +1,68 @@
 import DeleteIcon from "./DeleteIcon";
 import FolderIcon from "./FolderIcon";
-import SettingsIcon from "./SettingsIcon";
+// import SettingsIcon from "./SettingsIcon";
 
 const Navigation = ({
   renderedFolders,
   handleNavigation,
   handleDelete,
   handleChange,
-  getCurrColor,
+  // getCurrColor,
+  order,
 }) => {
+  let tempFolders = { ...renderedFolders };
+
+  if (tempFolders?.children && order === 1) {
+    let tmp = { name: tempFolders.name, children: {} };
+    Object.keys(tempFolders.children)
+      .map((t) => [t, tempFolders.children[t].name])
+      .sort((a, b) => a[1].localeCompare(b[1]))
+      .forEach((t) => {
+        tmp.children[t[0]] = tempFolders.children[t[0]];
+      });
+    tempFolders = { ...tmp };
+  } else if (tempFolders?.children && order === 2) {
+    let tmp = { name: tempFolders.name, children: {} };
+    Object.keys(tempFolders.children)
+      .map((t) => [t, tempFolders.children[t].name])
+      .sort((a, b) => a[1].localeCompare(b[1]))
+      .reverse()
+      .forEach((t) => {
+        tmp.children[t[0]] = tempFolders.children[t[0]];
+      });
+    tempFolders = { ...tmp };
+  }
+
+  // tempFolders?.children &&
+  //   console.log(
+  //     Object.keys(tempFolders.children)
+  //       .map((t) => [t, tempFolders.children[t].name])
+  //       .sort((a, b) => a[1].localeCompare(b[1]))
+  //   );
+
   return (
     <>
-      {(!renderedFolders?.children ||
-        Object.keys(renderedFolders?.children)?.length === 0) && (
+      {(!tempFolders?.children ||
+        Object.keys(tempFolders?.children)?.length === 0) && (
         <p>No folder found!</p>
       )}
-      {renderedFolders?.children &&
-        Object.keys(renderedFolders?.children)?.map((f) => {
+      {tempFolders?.children &&
+        Object.keys(tempFolders?.children)?.map((f) => {
           // console.log(f, getCurrColor(f));
           return (
             <div key={f} style={{ display: "inline-block", marginTop: "60px" }}>
               <button
                 className="folder-btn"
                 id={f}
-                value={renderedFolders.children[f].name}
+                value={tempFolders.children[f].name}
                 onClick={handleNavigation}
               >
                 <FolderIcon
                   width={110}
                   height={110}
-                  color={renderedFolders.children[f]?.color}
+                  color={tempFolders.children[f]?.color}
                 />
-                {renderedFolders.children[f].name}
+                {tempFolders.children[f].name}
               </button>
               {/* <button
               id={f}
@@ -57,8 +88,8 @@ const Navigation = ({
                   cursor: "pointer",
                 }}
                 defaultValue={
-                  renderedFolders.children[f]?.color
-                    ? renderedFolders.children[f].color
+                  tempFolders.children[f]?.color
+                    ? tempFolders.children[f].color
                     : "#536DFE"
                 }
                 onChange={(event) => handleChange(f, event.target.value)}
