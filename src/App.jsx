@@ -4,6 +4,7 @@ import Navigation from "./components/Navigation";
 import FolderCreation from "./components/FolderCreation";
 // import HomeIcon from "./components/HomeIcon";
 import Dialog from "./components/Dialog";
+// import Settings from "./components/Settings";
 
 function App() {
   // const folders1 = {
@@ -17,37 +18,37 @@ function App() {
   //   },
   // };
 
-  const folders = {
-    name: "root",
-    children: {
-      id1: {
-        name: "folder1",
-        children: {},
-      },
-      id2: {
-        name: "folder2",
-        children: {},
-      },
-      id3: {
-        name: "folder3",
-        children: {
-          id4: {
-            name: "sub1",
-            children: {},
-          },
-          id5: {
-            name: "sub2",
-            children: {
-              id6: {
-                name: "subsub1",
-                children: {},
-              },
-            },
-          },
-        },
-      },
-    },
-  };
+  // const folders = {
+  //   name: "root",
+  //   children: {
+  //     id1: {
+  //       name: "folder1",
+  //       children: {},
+  //     },
+  //     id2: {
+  //       name: "folder2",
+  //       children: {},
+  //     },
+  //     id3: {
+  //       name: "folder3",
+  //       children: {
+  //         id4: {
+  //           name: "sub1",
+  //           children: {},
+  //         },
+  //         id5: {
+  //           name: "sub2",
+  //           children: {
+  //             id6: {
+  //               name: "subsub1",
+  //               children: {},
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+  // };
 
   // const testFolders = {
   //   id1: {
@@ -104,9 +105,9 @@ function App() {
   const getFName = (fN, og, i) => {
     i = !i ? 0 : i;
 
-    const foundD = Object.values(renderedFolders.children).filter(
-      (f) => f.name === fN
-    );
+    const foundD = !renderedFolders?.children
+      ? []
+      : Object.values(renderedFolders.children).filter((f) => f.name === fN);
 
     if (foundD.length === 0) return fN;
     return getFName(og + ` (${i + 1})`, og, ++i);
@@ -126,6 +127,7 @@ function App() {
 
     const fName = getFName(nFName, nFName, null) || folderName;
     const tmp = { ...renderedFolders };
+    !tmp?.children ? (tmp.children = {}) : null;
     tmp.children[fId] = { name: fName, children: {} };
     setRenderedFolders(tmp);
     localStorage.setItem("renderedFolders", JSON.stringify(tmp));
@@ -141,6 +143,7 @@ function App() {
       currentFolder = currentFolder.children[currentKey];
     });
 
+    !currentFolder?.children ? (currentFolder.children = {}) : null;
     currentFolder.children[fId] = { name: fName, children: {} };
 
     setAllFolders(temp2);
@@ -167,11 +170,36 @@ function App() {
       currentFolder = currentFolder.children[currentKey];
     });
 
-    delete currentFolder[deleteFolder];
+    delete currentFolder.children[deleteFolder];
 
     setAllFolders(temp2);
     localStorage.setItem("allFolders", JSON.stringify(temp2));
     // console.log(temp2);
+  };
+
+  const handleSettings = (e, value) => {
+    const changedFolder = e;
+    const tmp = { ...renderedFolders };
+    tmp.children[changedFolder].color = value;
+    // console.log(tmp);
+    setRenderedFolders(tmp);
+    localStorage.setItem("renderedFolders", JSON.stringify(tmp));
+
+    const temp2 = { ...allFolders };
+
+    let currentFolder = temp2;
+
+    path.map((p) => {
+      const currentKey = p[0];
+      currentFolder.children[currentKey] =
+        currentFolder.children[currentKey] || {};
+      currentFolder = currentFolder.children[currentKey];
+    });
+
+    currentFolder.children[changedFolder].color = value;
+
+    setAllFolders(temp2);
+    localStorage.setItem("allFolders", JSON.stringify(temp2));
   };
 
   const handleAccess = (e) => {
@@ -200,31 +228,52 @@ function App() {
     setIsDeleteModalOpen(!isDeleteModalOpen);
   };
 
-  const [renderedFolders, setRenderedFolders] = useState(folders);
+  // const handleChangeModal = (e) => {
+  //   setCurrNewEvent(e.currentTarget);
+  //   setIsSettingsModalOpen(!isSettingsModalOpen);
+  // };
+
+  const getCurrColor = (e) => {
+    const key = e;
+    console.log(renderedFolders.children[key]);
+    return renderedFolders.children[key]?.color;
+  };
+
+  const [renderedFolders, setRenderedFolders] = useState({});
   const [folderName, setFolderName] = useState("");
   // const [clicked, setClicked] = useState("");
   const [path, setPath] = useState([]);
-  const [allFolders, setAllFolders] = useState(folders);
+  const [allFolders, setAllFolders] = useState({});
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currEvent, setCurrEvent] = useState(null);
+  // const [currNewEvent, setCurrNewEvent] = useState(null);
+
+  // const [folderColor, setFolderColor] = useState("default");
   // console.log(path);
+  // const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const [order, setOrder] = useState(0);
 
   useEffect(() => {
     const frs = JSON.parse(localStorage.getItem("allFolders"));
     const rFrs = JSON.parse(localStorage.getItem("renderedFolders"));
     const pth = JSON.parse(localStorage.getItem("path"));
+    // const fc = JSON.parse(localStorage.getItem("folderColor"));
+    const odr = JSON.parse(localStorage.getItem("order"));
 
-    if (frs === null) {
-      setAllFolders(folders);
-      localStorage.setItem("allFolders", JSON.stringify(folders));
-      setRenderedFolders(folders);
-      localStorage.setItem("renderedFolders", JSON.stringify(folders));
-      setPath([]);
-      localStorage.setItem("path", JSON.stringify([]));
+    if (frs === null || Object.keys(frs.children)?.length === 0) {
+      // setAllFolders(folders);
+      // localStorage.setItem("allFolders", JSON.stringify(folders));
+      // setRenderedFolders(folders);
+      // localStorage.setItem("renderedFolders", JSON.stringify(folders));
+      // setPath([]);
+      // setFolderColor("default");
+      // localStorage.setItem("path", JSON.stringify([]));
     } else {
       setAllFolders(frs);
       setRenderedFolders(rFrs);
-      setPath(pth);
+      setPath(!pth ? [] : pth);
+      // setFolderColor(fc);
+      setOrder(!odr ? 0 : odr);
     }
   }, []);
 
@@ -243,6 +292,22 @@ function App() {
         setFolderName={setFolderName}
       />
       <br />
+      <div>
+        <select
+          value={order}
+          onChange={(e) => {
+            setOrder(Number(e.target.value));
+            localStorage.setItem(
+              "order",
+              JSON.stringify(Number(e.target.value))
+            );
+          }}
+        >
+          <option value={0}>Default</option>
+          <option value={1}>ASC</option>
+          <option value={2}>DESC</option>
+        </select>
+      </div>
       <p>
         {/* <strong> */}
         <span
@@ -267,10 +332,22 @@ function App() {
         {/* </strong> */}
       </p>
       <br />
+      {/* <Settings
+        isOpen={isSettingsModalOpen}
+        handleChange={handleSettings}
+        setIsOpen={setIsSettingsModalOpen}
+        folderColor={folderColor}
+        setFolderColor={setFolderColor}
+        // e={currNewEvent}
+        getCurrColor={getCurrColor}
+      /> */}
       <Navigation
         handleNavigation={handleNavigation}
         handleDelete={handleModal}
+        handleChange={handleSettings}
         renderedFolders={renderedFolders}
+        getCurrColor={getCurrColor}
+        order={order}
       />
       <br />
       <br />
