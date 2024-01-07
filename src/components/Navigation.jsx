@@ -90,7 +90,7 @@ const Navigation = ({
                 defaultValue={
                   tempFolders.children[f]?.color
                     ? tempFolders.children[f].color
-                    : "#536DFE"
+                    : "#3D5AFE"
                 }
                 onChange={(event) => handleChange(f, event.target.value)}
               />
