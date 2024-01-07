@@ -233,11 +233,11 @@ function App() {
   //   setIsSettingsModalOpen(!isSettingsModalOpen);
   // };
 
-  const getCurrColor = (e) => {
-    const key = e;
-    console.log(renderedFolders.children[key]);
-    return renderedFolders.children[key]?.color;
-  };
+  // const getCurrColor = (e) => {
+  //   const key = e;
+  //   console.log(renderedFolders.children[key]);
+  //   return renderedFolders.children[key]?.color;
+  // };
 
   const [renderedFolders, setRenderedFolders] = useState({});
   const [folderName, setFolderName] = useState("");
@@ -346,7 +346,7 @@ function App() {
         handleDelete={handleModal}
         handleChange={handleSettings}
         renderedFolders={renderedFolders}
-        getCurrColor={getCurrColor}
+        // getCurrColor={getCurrColor}
         order={order}
       />
       <br />
