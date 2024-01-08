@@ -1,7 +1,7 @@
 const FolderCreation = ({ handleCreate }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    let fName = e.target.value;
+    let fName = e.target[0].value;
     if (fName.trim() === "")
       fName = prompt("You missed to name your folder. What would be called?");
     handleCreate(fName);
