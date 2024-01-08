@@ -88,6 +88,20 @@ function App() {
 
   // <Folder parent={id1} />
 
+  const [renderedFolders, setRenderedFolders] = useState({});
+  // const [folderName, setFolderName] = useState("");
+  // const [clicked, setClicked] = useState("");
+  const [path, setPath] = useState([]);
+  const [allFolders, setAllFolders] = useState({});
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [currEvent, setCurrEvent] = useState(null);
+  // const [currNewEvent, setCurrNewEvent] = useState(null);
+
+  // const [folderColor, setFolderColor] = useState("default");
+  // console.log(path);
+  // const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const [order, setOrder] = useState(0);
+
   const handleNavigation = (e) => {
     // setClicked(e.currentTarget.value);
     const tmp = [...path];
@@ -102,9 +116,7 @@ function App() {
     );
   };
 
-  const getFName = (fN, og, i) => {
-    i = !i ? 0 : i;
-
+  const getFName = (fN, og, i = 0) => {
     const foundD = !renderedFolders?.children
       ? []
       : Object.values(renderedFolders.children).filter((f) => f.name === fN);
@@ -125,7 +137,7 @@ function App() {
     // }
     // console.log(renderedFolders.children);
 
-    const fName = getFName(nFName, nFName, null) || folderName;
+    const fName = getFName(nFName, nFName);
     const tmp = { ...renderedFolders };
     !tmp?.children ? (tmp.children = {}) : null;
     tmp.children[fId] = { name: fName, children: {} };
@@ -239,20 +251,6 @@ function App() {
   //   return renderedFolders.children[key]?.color;
   // };
 
-  const [renderedFolders, setRenderedFolders] = useState({});
-  const [folderName, setFolderName] = useState("");
-  // const [clicked, setClicked] = useState("");
-  const [path, setPath] = useState([]);
-  const [allFolders, setAllFolders] = useState({});
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [currEvent, setCurrEvent] = useState(null);
-  // const [currNewEvent, setCurrNewEvent] = useState(null);
-
-  // const [folderColor, setFolderColor] = useState("default");
-  // console.log(path);
-  // const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
-  const [order, setOrder] = useState(0);
-
   useEffect(() => {
     const frs = JSON.parse(localStorage.getItem("allFolders"));
     const rFrs = JSON.parse(localStorage.getItem("renderedFolders"));
@@ -288,8 +286,8 @@ function App() {
 
       <FolderCreation
         handleCreate={handleCreate}
-        folderName={folderName}
-        setFolderName={setFolderName}
+        // folderName={folderName}
+        // setFolderName={setFolderName}
       />
       <br />
       <div>
